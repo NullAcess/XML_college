@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE timeTable [
+    <!ELEMENT timeTable (complexes, lessons)> <!--  Тут короче типо некий класс который говорит что вот element с названием timetable содержит что то-->
+    <!ELEMENT complexes (complex+)> <!--  complexes содержит не меньше 1 complex -->
+    <!ELEMENT lessons (lesson+)> <!--  lessons содержит не меньше 1 lesson -->
+
+    <!ELEMENT complex (name, address)> <!--  вот element complex который у нас будет вот он содержит name + address и атрибут code ID -->
+    <!ATTLIST complex
+        code ID #REQUIRED>
+
+        <!--  атрибут пропускать нельзя, а IDREF значит ссылку на существующий ID -->
+    <!ELEMENT lesson (date, time)>
+    <!ATTLIST lesson 
+        no CDATA #REQUIRED 
+        complex IDREF #REQUIRED>
+        <!--  CDATA обычный текст внутри атрибута -->
+
+    <!ELEMENT name (#PCDATA)> <!--  element требует текст внутри -->
+    <!ELEMENT address (#PCDATA)>
+    <!ELEMENT date (#PCDATA)>
+    <!ELEMENT time (#PCDATA)>
+]>
+<timeTable>
+    <complexes>
+        <complex code="НАГИБАТОР_3000">
+            <name>Здравствуйте, уважаемый Борисов Игорь Олегович, хотел сказать вам: 
+                удачи, много денег, счастья, легкой проверки работ, чтоб студенты все с первого раза сдавали и все :)</name>
+            <address>ул. Пушкина, д. Колотушкина</address>
+        </complex>
+    </complexes>
+    <lessons>
+        <lesson no="Быстрее быстрого скорее скорого" complex="НАГИБАТОР_3000">
+            <date>25.02.2021</date>
+            <time>01:00</time>
+        </lesson>
+    </lessons>
+</timeTable>
