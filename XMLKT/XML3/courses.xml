@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<courses>
+    <course>
+        <name>.XML технологии</name>
+        <teachers><teacher>Борисов И.О.</teacher></teachers>
+        <topics><topic>XML</topic><topic>XSLT</topic></topics>
+    </course>
+    <course>
+        <name>.XML технологии 2</name>
+        <teachers><teacher>Борисов И.О.</teacher></teachers>
+        <topics><topic>XML</topic><topic>CSS</topic></topics>
+    </course>
+    <course>
+        <name>Если это не XML, то не зовите</name>
+        <teachers><teacher>Иванов А.А.</teacher></teachers>
+        <topics><topic>HTML</topic></topics>
+    </course>
+</courses>
