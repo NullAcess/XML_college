@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notebook xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="notebook.xsd">
+    <offices>
+        <office code="off-1">ITHUB вднх</office>
+        <office code="off-2">ITHUB на тульской</office>
+    </offices>
+    <person id="p-1" office="off-1">
+        <name>
+            <first>Игорь</first>
+            <surname>Борисов</surname>
+        </name>
+        <address>
+            <index>777777</index>
+            <city>Москва</city>
+            <street>Красная площадь, кремль</street>
+        </address>
+        <phones>
+            <phone type="work">777-77-77</phone>
+            <phone type="home">111-11-11</phone>
+        </phones>
+    </person>
+    <person id="p-2" office="off-2">
+        <name>
+            <first>Игорь</first>
+            <surname>Борисов Второй</surname>
+        </name>
+        <address>
+            <city>Москва</city>
+            <street>Красная площадь, кремль соседний</street>
+            <index>777777</index>
+        </address>
+        <phones>
+            <phone>999-99-99</phone>
+        </phones>
+    </person>
+</notebook>

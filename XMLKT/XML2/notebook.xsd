@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="notebook"> <!-- корень notebook просто существует -->
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="offices"> <!-- element с названием offices -->
+                    <xs:complexType> <!-- ну внутри короче будет не просто текст а прям атрибуты там и тд тп.-->
+                        <xs:sequence> <!-- ну тут название sequnce что на русский закономерность / порядок, ну в общем в строгом 
+                            порядке все должно быть, вот прям как я укажу -->
+                            <xs:element name="office" maxOccurs="unbounded"> <!-- тот самый минимум 1 элемент office 
+                                с атрибутом maxOccurs, который убирает ограничение что в XSD любой тег должег появиться 1 раз только-->
+                                <xs:complexType>
+                                    <xs:simpleContent> <!-- ну внутри только текст будет без чего то крутого -->
+                                        <xs:extension base="xs:string"> <!-- base у нас теперь string -->
+                                            <xs:attribute name="code" type="xs:string" use="required"/> <!-- ну и simplecontent запрещает атрибты 
+                                            но через extension разрешаем -->
+                                        </xs:extension> <!-- use это про требование к использованию code атрибута -->
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element> <!-- просто закрытие всех тегов-->
+
+                <xs:element name="person" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="first" type="xs:string"/>
+                                        <xs:element name="surname" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+
+                            <xs:element name="address">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="city" type="xs:string"/>
+                                        <xs:element name="street" type="xs:string"/>
+                                        <xs:element name="index">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:pattern value="\d{6}"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:all>
+                                </xs:complexType>
+                            </xs:element>
+
+                            <xs:element name="phones">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="phone" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="phoneType">
+                                                        <xs:attribute name="type">
+                                                            <xs:simpleType>
+                                                                <xs:restriction base="xs:string"> 
+                                                                    <xs:enumeration value="work"/>
+                                                                    <xs:enumeration value="home"/>
+                                                                </xs:restriction> <!-- Парсер, используем только work home другого не дано -->
+                                                            </xs:simpleType>
+                                                        </xs:attribute>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                        <xs:attribute name="office" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+
+        <xs:key name="officeKey"> <!-- Key гласит, что если кто то что то создат с тем же code то мы такое блокируем -->
+            <xs:selector xpath="offices/office"/> <!-- ну XPath просто путь как в windows папках в проводнике -->
+            <xs:field xpath="@code"/> <!-- проверка на уникальность атрибута code так скажем -->
+        </xs:key>
+
+        <xs:key name="personKey">
+            <xs:selector xpath="person"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:keyref name="personOfficeRef" refer="officeKey">
+            <xs:selector xpath="person"/>
+            <xs:field xpath="@office"/>
+        </xs:keyref>
+    </xs:element>
+
+    <xs:simpleType name="phoneType"> <!-- создаем свой тип -->
+        <xs:restriction base="xs:string"> <!-- ну короче текст в паттерне у нас как строка будет -->
+            <xs:pattern value="\d{3}-\d{2}-\d{2}"/>  <!-- три штуки любой цифры потом 2 штуки любой цифры и снова-->
+        </xs:restriction> <!-- ну снова ограничение значит что только формат как в value принимаем и больше никакой -->
+    </xs:simpleType>  
+    
+</xs:schema>
